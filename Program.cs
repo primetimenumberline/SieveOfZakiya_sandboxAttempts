@@ -4,7 +4,7 @@ int modpg = 30;
 int rescnt = 8;
 int[] residues = { 7, 11, 13, 17, 19, 23, 29, 31 };
 int[] posn = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 4, 0, 0, 0, 5, 0, 0, 0, 0, 0, 6, 0, 7 };
-int n = 100;     // input must be >= 7
+int n = 541;     // input must be >= 7
 int val = (n - 1) | 1;  // ensure input odd number
 int kmax = (val - 2) / modpg;  // the residue group val is in
 int r = 7;
@@ -31,12 +31,14 @@ for (int i = 0; i < maxpcs; i++)
 }
 // extract prime value from prms array
 r = -1;
-for (int i = 0; i < maxpcs; i++)
-{  // iterate over each prms location
+for (int m = 0; m < maxpcs; m++)
+{
+    // iterate over each prms location
     r++; if (r == rescnt) { r = 0; k += 1; }//(r = 0, k += 1);
-    if (!prms[i])
+    Console.WriteLine("m: " + m + " chk: " + (modpg * k + residues[r]) + " modk: " + (modpg*k) + " residues[r]: " + residues[r] + " prms[m]: " + prms[m]);
+    if (!prms[m])
     {  // check for what logic a prime value is
         int prime = modpg * k + residues[r];
-        Console.WriteLine(prime);
+        //Console.WriteLine(prime);
     }
 }
