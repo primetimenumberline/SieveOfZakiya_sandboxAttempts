@@ -4,12 +4,15 @@ int modpg = 30;
 int rescnt = 8;
 int[] residues = { 7, 11, 13, 17, 19, 23, 29, 31 };
 int[] posn = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 4, 0, 0, 0, 5, 0, 0, 0, 0, 0, 6, 0, 7 };
-int n = 541;     // input must be >= 7
-int val = (n - 1) | 1;  // ensure input odd number
-int kmax = (val - 2) / modpg;  // the residue group val is in
+int n = 544;     // input must be >= 7
+//int val = (n - 1) | 1;  // ensure input odd number  //I'm not sure why though
+Console.WriteLine("n: " + n);// + " val: " + val);
+int kmax = n / modpg; //(val - 2) / modpg;  // the residue group val is in  
 int r = 7;
-while ((modpg * kmax + residues[r]) > val) r--;
-int maxpcs = kmax * rescnt + r;     // number of prime candidates <= val
+Console.WriteLine("starting checks at: " + (modpg * kmax + residues[r]));
+while ((modpg * kmax + residues[r]) > n) { r--; if (r == -1) break;} //for input such as 544 which resides between [tracks containing] 541 and 547, must have check to avoid -1 for array bounds protection
+int maxpcs = kmax * rescnt + (r+1);     // number of prime candidates <= val
+Console.WriteLine("maxpcs: " + maxpcs + " kmax: " + kmax + " r: " + r);
 bool[] prms = new bool[maxpcs];  // want initialized to false
 int k = 0; r = -1;
 
@@ -20,7 +23,7 @@ for (int i = 0; i < maxpcs; i++)
     if (prms[i]) continue;   // skip location if not prime
     int prm_r = residues[r];
     int prime = modpg * k + prm_r;
-    if (prime > Math.Floor(Math.Sqrt(val))) break;//if (prime > Math.sqrt(val).floor) break;
+    if (prime > Math.Floor(Math.Sqrt(n))) break;//if (prime > Math.sqrt(val).floor) break;
     int primestep = prime * rescnt;
     for (int j = 0; j < rescnt; j++)
     {  // do for each residue
