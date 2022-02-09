@@ -1,22 +1,25 @@
 ﻿//ATTEMPTING SIEVE OF ZAKIYA IMPLEMENTATION WITH A CODE SKELETON PROVIDED TO ME
 
+
+int n = 10100;  //2201;//2213;//2219;//2221;//2227;//510;//2251;//547;     // input must be >= 7
+
+
 int modpg = 30;
 int rescnt = 8;
 int[] residues = { 7, 11, 13, 17, 19, 23, 29, 31 };
 int[] posn = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 4, 0, 0, 0, 5, 0, 0, 0, 0, 0, 6, 0, 7 };
-int n = 2201;//2213;//2219;//2221;//2227;//510;//2251;//547;     // input must be >= 7
 
-Console.WriteLine("n: " + n);
+//Console.WriteLine("n: " + n);
 int kmax = n / modpg;
-int r = 7;
+int r = rescnt - 1;
 
-Console.WriteLine("starting checks at: " + (modpg * kmax + residues[r]) + " kmax: "+kmax + " kmax*rescnt: "+ (kmax*rescnt));
+//Console.WriteLine("starting checks at: " + (modpg * kmax + residues[r]) + " kmax: "+kmax + " kmax*rescnt: "+ (kmax*rescnt));
 
-while ((modpg * kmax + residues[r]) > n) { r--; if (r == -1) break;} 
+while ((modpg * kmax + residues[r]) > n) { r--; if (r == -1) break;} //r is -1 indicates not found
 int maxpcs = kmax * rescnt + (r + 1);     // number of prime candidates <= val
 if (modpg * kmax == n) maxpcs -= 1;     //remove the overcounting, which occurs at the boundary condition where n == modpg*kmax
 
-Console.WriteLine("maxpcs: " + maxpcs + " r: " + r);
+//Console.WriteLine("maxpcs: " + maxpcs + " r: " + r);
 
 bool[] prms = new bool[maxpcs];  // want initialized to false
 int k = 0; r = -1;
@@ -46,15 +49,15 @@ for (int i = 0; i < maxpcs; i++)
     }
 }
 // extract prime value from prms array
-r = -1; k = 0;
+k = 0; r = -1; 
 for (int m = 0; m < maxpcs; m++)
 {
     // iterate over each prms location
     r++; if (r == rescnt) { r = 0; k += 1; }//(r = 0, k += 1);
-    Console.WriteLine("m: " + m + " chk: " + (modpg * k + residues[r]) +" k: " +k+" modk: " + (modpg*k) + " residues[r]: " + residues[r] + " prms[m]: " + prms[m]);
+    //Console.WriteLine("m: " + m + " chk: " + (modpg * k + residues[r]) +" k: " +k+" modk: " + (modpg*k) + " residues[r]: " + residues[r] + " prms[m]: " + prms[m]);
     if (!prms[m])
     {  // check for what logic a prime value is
         int prime = modpg * k + residues[r];
-        //Console.WriteLine(prime);
+        Console.WriteLine(prime);
     }
 }
